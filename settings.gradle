@@ -1,0 +1,3 @@
+include ':function'
+include ':app'
+rootProject.name = "common-function"
