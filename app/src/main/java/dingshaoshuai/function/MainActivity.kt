@@ -15,22 +15,38 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val screenPixels = getScreenPixels()
-        Log.i(TAG, "onCreate: width = ${screenPixels[0]}")
-        Log.i(TAG, "onCreate: height = ${screenPixels[1]}")
+
+    }
+
+    fun btnSaveClick(view: View) {
+        val list = listOf(Account("火币", "火币的key", "111111"), Account("币安", "币安的key", "222222"))
+        AccountsCache.setValue(list)
+    }
+
+    fun btnGetClick(view: View) {
+
+        val parseList = listOf(Account("火币", "火币的key", "111111"), Account("币安", "币安的key", "222222"))
+
+        val accounts = mutableListOf<Account>()
+        AccountsCache.getValue()?.let { list ->
+            accounts.addAll(list)
+        }
+        accounts.addAll(parseList)
+        AccountsCache.setValue(accounts)
 
 
-        Log.i(TAG, "onCreate1: ${resourceString(R.string.app_name)}")
-        Log.i(TAG, "onCreate2: ${resourceStringArray(R.array.string_array)[0]}")
-        Log.i(TAG, "onCreate3: ${resourceInteger(R.integer.interger_100)}")
-        Log.i(TAG, "onCreate4: ${resourceIntArray(R.array.int_array)[0]}")
-        Log.i(TAG, "onCreate5: ${resourceBoolean(R.bool.boolean_true)}")
 
-        findViewById<View>(R.id.tv).setBackgroundColor(resourceColor(R.color.black))
-        findViewById<ImageView>(R.id.iv).setImageDrawable(resourceDrawable(R.drawable.ic_logout))
+
+        val value = AccountsCache.getValue()
+        Log.i(TAG, "btnGetClick: ${value?.toString()}")
+        value?.forEach {
+            Log.i(TAG, "btnGetClick: $it")
+        }
+
     }
 
     companion object {
-        private const val TAG = "MainActivity"
+        private const val TAG = "test_dss"
     }
+
 }
