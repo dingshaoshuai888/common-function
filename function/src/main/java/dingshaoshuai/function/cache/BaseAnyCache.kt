@@ -38,6 +38,7 @@ abstract class BaseAnyCache<T : Any> : AbstractCache<T>() {
     override fun clear() {
         CacheProxy.instance.delete(key)
         mValue = null
+        liveData.value = mValue
     }
 
     fun observer(owner: LifecycleOwner, observer: Observer<T>) {
